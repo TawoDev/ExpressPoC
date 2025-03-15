@@ -33,10 +33,6 @@ app.get('/', async (req, res) => {
             body: JSON.stringify(requestData)
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
         const result = await response.json();
         console.log("Session Created:", result);
     } catch (error) {
