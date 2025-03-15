@@ -41,7 +41,7 @@ app.post('/', async (req, res) => {
         });
 
         const result = await response.json();
-        console.log("Session Created:", result);
+        res.status(200).send(result);
     } catch (error) {
         console.error("Error creating session:", error);
     }
