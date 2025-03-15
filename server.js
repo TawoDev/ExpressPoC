@@ -8,9 +8,13 @@ const apiUrl = process.env.API_URL;
 const orgUrl = process.env.ORG_URL;
 const accessToken = process.env.ACCESS_TOKEN;
 
+app.get('/health', (req, res) => {
+    res.status(200).send('OK');
+});
+
 app.get('/', async (req, res) => {
     const url = apiUrl;
-    const token = accessToken; // 你的 Bearer Token
+    const token = accessToken;
 
     const requestData = {
         externalSessionKey: "SDJyg27yqe7hd-1927ye7uwqghduwa",
