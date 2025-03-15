@@ -15,7 +15,7 @@ app.get('/healthz', (req, res) => {
     res.status(200).send('OK');
 });
 
-app.get('/', async (req, res) => {
+app.post('/', async (req, res) => {
     const url = apiUrl;
     const token = accessToken;
 
