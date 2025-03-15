@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 
 const dotenv = require('dotenv');
@@ -8,7 +9,9 @@ const apiUrl = process.env.API_URL;
 const orgUrl = process.env.ORG_URL;
 const accessToken = process.env.ACCESS_TOKEN;
 
-app.get('/health', (req, res) => {
+app.use(cors());
+
+app.get('/healthz', (req, res) => {
     res.status(200).send('OK');
 });
 
@@ -44,4 +47,5 @@ app.get('/', async (req, res) => {
     }
 });
 
-app.listen(3000);
+const PORT = 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
