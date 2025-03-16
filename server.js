@@ -72,32 +72,31 @@ app.post('/chat/init', async (req, res) => {
 });
 
 app.post('/chat/cont', async (req, res) => {
-    console.log(`req.headers--${JSON.stringify(req.headers)}`);
     console.log(`req.body--${JSON.stringify(req.body)}`);
-    // const requestData = 
-    //     {
-    //         "message": {
-    //           "sequenceId": 1,
-    //           "type": "Text",
-    //           "text": req.body.message
-    //         }
-    //     };
+    const requestData = 
+        {
+            "message": {
+              "sequenceId": 1,
+              "type": "Text",
+              "text": req.body.message
+            }
+        };
 
-    // try {
-    //     const response = await fetch(`https://api.salesforce.com/einstein/ai-agent/v1/sessions/${req.body.sessionId}/messages`, {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             "Authorization": `Bearer ${req.body.access_token}`
-    //         },
-    //         body: JSON.stringify(requestData)
-    //     });
+    try {
+        const response = await fetch(`https://api.salesforce.com/einstein/ai-agent/v1/sessions/${req.body.sessionId}/messages`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${req.body.access_token}`
+            },
+            body: JSON.stringify(requestData)
+        });
 
-    //     const result = await response.json();
-    //     res.status(200).send(result);
-    // } catch (error) {
-    //     console.error("Error creating session:", error);
-    // }
+        const result = await response.json();
+        res.status(200).send(result);
+    } catch (error) {
+        console.error("Error creating session:", error);
+    }
 });
 
 const PORT = 3000;
