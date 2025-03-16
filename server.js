@@ -10,7 +10,7 @@ const tokenUrl = process.env.TOKEN_URL;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 
-const accessToken = async (clientId, clientSecret) => {
+const accessToken = (clientId, clientSecret) => {
     const data = {
         client_id: clientId,
         client_secret: clientSecret,
@@ -18,7 +18,7 @@ const accessToken = async (clientId, clientSecret) => {
     };
 
     try {
-        const response = await fetch(tokenUrl, {
+        const response = fetch(tokenUrl, {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -26,7 +26,7 @@ const accessToken = async (clientId, clientSecret) => {
             body: JSON.stringify(data)
         });
 
-        const result = await response.json();
+        const result = response.json();
         console.log("Access token:", result.token_format);
         return result.access_token;
     } catch (error) {
