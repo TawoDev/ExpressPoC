@@ -10,29 +10,28 @@ const tokenUrl = process.env.TOKEN_URL;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 
-const accessToken = (clientId, clientSecret) => {
-    const data = {
-        client_id: clientId,
-        client_secret: clientSecret,
-        grant_type: "client_credentials",
-    };
+const accessToken = async (clientId, clientSecret) => {
+    const data = new URLSearchParams();
+    data.append("client_id", clientId);
+    data.append("client_secret", clientSecret);
+    data.append("grant_type", "client_credentials");
 
     try {
-        const response = fetch(tokenUrl, {
-            method: "POST",
-            headers: {
+        const response = await fetch(tokenUrl, {
+            method: "POST"
+            , headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: JSON.stringify(data)
+            }
+            , body: data
         });
 
-        const result = response.json();
+        const result = await response.json();
         console.log("Access token:", result.token_format);
         return result.access_token;
     } catch (error) {
         console.error("Error getting access token:", error);
     }
-};;
+};
 
 app.use(cors());
 
