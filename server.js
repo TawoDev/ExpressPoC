@@ -71,25 +71,22 @@ app.post('/chat/init', async (req, res) => {
 });
 
 app.post('/chat/cont', async (req, res) => {
-    const token = await accessToken(clientId, clientSecret);
-
-    const requestData = {
-        externalSessionKey: "123456",
-        instanceConfig: {
-            endpoint: orgUrl
-        },
-        streamingCapabilities: {
-            chunkTypes: ["Text"]
-        },
-        bypassUser: true
-    };
+    console.log(`req--${req}`);
+    const requestData = 
+        {
+            "message": {
+              "sequenceId": 1,
+              "type": "Text",
+              "text": req.body.message
+            }
+        };
 
     try {
-        const response = await fetch(apiUrl, {
+        const response = await fetch(`https://api.salesforce.com/einstein/ai-agent/v1/sessions/${req.body.sessionId}/messages`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token.access_token}`
+                "Authorization": `Bearer ${req.body.access_token}`
             },
             body: JSON.stringify(requestData)
         });
