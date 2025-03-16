@@ -71,7 +71,7 @@ app.post('/chat/init', async (req, res) => {
 });
 
 app.post('/chat/cont', async (req, res) => {
-    console.log(`req--${req}`);
+    console.log(`req--${JSON.stringify(req)}`);
     // const requestData = 
     //     {
     //         "message": {
