@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const dotenv = require('dotenv');
-dotenv.config();
+dotenv.config();)
 
 const apiUrl = process.env.API_URL;
 const orgUrl = process.env.ORG_URL;
@@ -27,6 +27,7 @@ const accessToken = async (clientId, clientSecret) => {
         });
 
         const result = await response.json();
+        console.log("Access token:", result.token_format);
         return result.access_token;
     } catch (error) {
         console.error("Error getting access token:", error);
