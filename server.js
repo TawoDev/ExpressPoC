@@ -38,13 +38,42 @@ app.get('/healthz', (req, res) => {
     res.status(200).send('OK');
 });
 
-app.post('/', async (req, res) => {
+app.post('/chat/init', async (req, res) => {
     const token = await accessToken(clientId, clientSecret);
 
-    console.log(`Token: ${token.access_token.substring(0, 5)}...`);
+    const requestData = {
+        externalSessionKey: "123456",
+        instanceConfig: {
+            endpoint: orgUrl
+        },
+        streamingCapabilities: {
+            chunkTypes: ["Text"]
+        },
+        bypassUser: true
+    };
+
+    try {
+        const response = await fetch(apiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token.access_token}`
+            },
+            body: JSON.stringify(requestData)
+        });
+
+        const result = await response.json();
+        res.status(200).send(result);
+    } catch (error) {
+        console.error("Error creating session:", error);
+    }
+});
+
+app.post('/chat/cont', async (req, res) => {
+    const token = await accessToken(clientId, clientSecret);
 
     const requestData = {
-        externalSessionKey: "SDJyg27yqe7hd-1927ye7uwqghduwa",
+        externalSessionKey: "123456",
         instanceConfig: {
             endpoint: orgUrl
         },
