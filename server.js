@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const dotenv = require('dotenv');
-dotenv.config();)
+dotenv.config();
 
 const apiUrl = process.env.API_URL;
 const orgUrl = process.env.ORG_URL;
