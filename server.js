@@ -41,7 +41,7 @@ app.get('/healthz', (req, res) => {
 app.post('/', async (req, res) => {
     const token = accessToken(clientId, clientSecret);
 
-    console.log(`Token: ${token.substring(0, 5)}...`);
+    console.log(`Token: ${String(token).substring(0, 5)}...`);
 
     const requestData = {
         externalSessionKey: "SDJyg27yqe7hd-1927ye7uwqghduwa",
