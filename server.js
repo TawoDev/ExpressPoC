@@ -42,7 +42,7 @@ app.post('/chat/init', async (req, res) => {
     const token = await accessToken(clientId, clientSecret);
 
     const requestData = {
-        externalSessionKey: "123456",
+        // externalSessionKey: "123456",
         instanceConfig: {
             endpoint: orgUrl
         },
@@ -63,6 +63,7 @@ app.post('/chat/init', async (req, res) => {
         });
 
         const result = await response.json();
+        result = { ...result, access_token: token.access_token };
         res.status(200).send(result);
     } catch (error) {
         console.error("Error creating session:", error);
