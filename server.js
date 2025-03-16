@@ -41,7 +41,7 @@ app.get('/healthz', (req, res) => {
 app.post('/', async (req, res) => {
     const token = await accessToken(clientId, clientSecret);
 
-    console.log(`Token: ${JSON.stringify(token.access_token).substring(0, 5)}...`);
+    console.log(`Token: ${token.access_token.substring(0, 5)}...`);
 
     const requestData = {
         externalSessionKey: "SDJyg27yqe7hd-1927ye7uwqghduwa",
@@ -59,7 +59,7 @@ app.post('/', async (req, res) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${token.access_token}`
             },
             body: JSON.stringify(requestData)
         });
