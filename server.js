@@ -1,13 +1,37 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-
 const dotenv = require('dotenv');
-dotenv.config();
+dotenv.config();)
 
 const apiUrl = process.env.API_URL;
 const orgUrl = process.env.ORG_URL;
-const accessToken = process.env.ACCESS_TOKEN;
+const tokenUrl = process.env.TOKEN_URL;
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
+
+const accessToken = async (clientId, clientSecret) => {
+    const data = {
+        client_id: clientId,
+        client_secret: clientSecret,
+        grant_type: "client_credentials",
+    };
+
+    try {
+        const response = await fetch(tokenUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        return result.access_token;
+    } catch (error) {
+        console.error("Error getting access token:", error);
+    }
+};;
 
 app.use(cors());
 
@@ -16,8 +40,7 @@ app.get('/healthz', (req, res) => {
 });
 
 app.post('/', async (req, res) => {
-    const url = apiUrl;
-    const token = accessToken;
+    const token = accessToken(clientId, clientSecret);
 
     const requestData = {
         externalSessionKey: "SDJyg27yqe7hd-1927ye7uwqghduwa",
@@ -31,7 +54,7 @@ app.post('/', async (req, res) => {
     };
 
     try {
-        const response = await fetch(url, {
+        const response = await fetch(apiUrl, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
