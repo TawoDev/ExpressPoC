@@ -62,7 +62,7 @@ app.post('/chat/init', async (req, res) => {
             body: JSON.stringify(requestData)
         });
 
-        const result = await response.json();
+        let result = await response.json();
         result = { ...result, access_token: token.access_token };
         res.status(200).send(result);
     } catch (error) {
