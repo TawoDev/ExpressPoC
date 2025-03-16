@@ -26,7 +26,7 @@ const accessToken = async (clientId, clientSecret) => {
         });
 
         const result = await response.json();
-        return result.access_token;
+        return result;
     } catch (error) {
         console.error("Error getting access token:", error);
     }
@@ -39,9 +39,9 @@ app.get('/healthz', (req, res) => {
 });
 
 app.post('/', async (req, res) => {
-    const token = accessToken(clientId, clientSecret);
+    const token = await accessToken(clientId, clientSecret);
 
-    console.log(`Token: ${JSON.stringify(token).substring(0, 5)}...`);
+    console.log(`Token: ${JSON.stringify(token.access_token).substring(0, 5)}...`);
 
     const requestData = {
         externalSessionKey: "SDJyg27yqe7hd-1927ye7uwqghduwa",
