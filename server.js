@@ -75,7 +75,7 @@ app.post('/chat/cont', async (req, res) => {
     const requestData = 
         {
             "message": {
-              "sequenceId": 1,
+              "sequenceId": Date.now(),
               "type": "Text",
               "text": req.body.message
             }
