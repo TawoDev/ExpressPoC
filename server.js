@@ -13,7 +13,7 @@ const clientSecret = process.env.CLIENT_SECRET;
 const sessionSecret = process.env.SESSION_SECRET;
 
 app.use(session({
-    secret: process.env.SESSION_SECRET
+    secret: sessionSecret
     , resave: false
     , saveUninitialized: true
     , cookie: { secure: true }
@@ -85,7 +85,8 @@ app.post('/chat/init', async (req, res) => {
 
 app.post('/chat/cont', async (req, res) => {
     if (!req.session.access_token || !req.session.sessionId) {
-        console.error("Session not initialized:", error);
+        console.log(`req.session.access_token--->${req.session.access_token}`);
+        console.log(`req.session.sessionId--->${req.session.sessionId}`);
         return res.status(401).json({ error: 'Session not initialized' });
     }
     const requestData = 
