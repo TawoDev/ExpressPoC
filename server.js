@@ -54,7 +54,6 @@ app.get('/healthz', (req, res) => {
 });
 
 app.post('/chat/init', async (req, res) => {
-    console.log("Session before:", JSON.stringify(req.session));
     const token = await accessToken(clientId, clientSecret);
 
     const requestData = {
@@ -89,6 +88,8 @@ app.post('/chat/init', async (req, res) => {
             else console.log("Session saved successfully!");
         });
 
+        console.log("Session chat/init:", JSON.stringify(req.session));
+
         res.status(200).send(result);
     } catch (error) {
         console.error("Error creating session:", error);
@@ -96,7 +97,7 @@ app.post('/chat/init', async (req, res) => {
 });
 
 app.post('/chat/cont', async (req, res) => {
-    console.log(`req.session--${JSON.stringify(req.session)}`);
+    console.log(`Session chat/cont:--${JSON.stringify(req.session)}`);
     if (!req.session.access_token || !req.session.sessionId) {
         console.log(`req.session.access_token--->${req.session.access_token}`);
         console.log(`req.session.sessionId--->${req.session.sessionId}`);
