@@ -43,7 +43,7 @@ app.post('/chat/init', async (req, res) => {
     const token = await accessToken(clientId, clientSecret);
 
     const requestData = {
-        externalSessionKey: "123456",
+        externalSessionKey: Date.now(),
         instanceConfig: {
             endpoint: orgUrl
         },
