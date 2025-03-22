@@ -107,12 +107,13 @@ app.post('/chat/cont', async (req, res) => {
 
     try {
         const response = await fetch(`https://api.salesforce.com/einstein/ai-agent/v1/sessions/${req.session.sessionId}/messages`, {
-            method: "POST",
-            headers: {
+            method: "POST"
+            , headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${req.session.access_token}`
-            },
-            body: JSON.stringify(requestData)
+            }
+            , body: JSON.stringify(requestData)
+            , credentials: 'include'
         });
 
         const result = await response.json();
