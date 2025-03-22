@@ -9,6 +9,14 @@ const orgUrl = process.env.ORG_URL;
 const tokenUrl = process.env.TOKEN_URL;
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
+const sessionSecret = process.env.SESSION_SECRET;
+
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'your_secret_key'
+    , resave: false
+    , saveUninitialized: true
+    , cookie: { secure: false }
+}));
 
 const accessToken = async (clientId, clientSecret) => {
     const data = new URLSearchParams();
@@ -64,7 +72,10 @@ app.post('/chat/init', async (req, res) => {
         });
 
         let result = await response.json();
-        result = { ...result, access_token: token.access_token };
+        
+        req.session.access_token = token.access_token;
+        req.session.sessionId = result.sessionId;
+
         res.status(200).send(result);
     } catch (error) {
         console.error("Error creating session:", error);
@@ -72,6 +83,10 @@ app.post('/chat/init', async (req, res) => {
 });
 
 app.post('/chat/cont', async (req, res) => {
+    if (!req.session.access_token || !req.session.sessionId) {
+        console.error("Session not initialized:", error);
+        return res.status(401).json({ error: 'Session not initialized' });
+    }
     const requestData = 
         {
             "message": {
@@ -82,11 +97,11 @@ app.post('/chat/cont', async (req, res) => {
         };
 
     try {
-        const response = await fetch(`https://api.salesforce.com/einstein/ai-agent/v1/sessions/${req.body.sessionId}/messages`, {
+        const response = await fetch(`https://api.salesforce.com/einstein/ai-agent/v1/sessions/${req.session.sessionId}/messages`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${req.body.access_token}`
+                "Authorization": `Bearer ${req.session.access_token}`
             },
             body: JSON.stringify(requestData)
         });
