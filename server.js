@@ -12,6 +12,8 @@ const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const sessionSecret = process.env.SESSION_SECRET;
 
+app.use(cors());
+app.use(express.json());
 app.use(session({
     secret: sessionSecret
     , resave: false
@@ -40,9 +42,6 @@ const accessToken = async (clientId, clientSecret) => {
         console.error("Error getting access token:", error);
     }
 };
-
-app.use(cors());
-app.use(express.json());
 
 app.get('/healthz', (req, res) => {
     res.status(200).send('OK');
