@@ -12,12 +12,18 @@ const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const sessionSecret = process.env.SESSION_SECRET;
 
-app.use(cors());
+app.use(cors({
+    credentials: true
+}));
 app.use(session({
     secret: sessionSecret
     , resave: false
     , saveUninitialized: true
-    , cookie: { secure: true }
+    , cookie: { 
+        secure: true,
+        httpOnly: true,
+        sameSite: 'None'
+    }
 }));
 app.use(express.json());
 
@@ -77,12 +83,10 @@ app.post('/chat/init', async (req, res) => {
         req.session.access_token = token.access_token;
         req.session.sessionId = result.sessionId;
 
-        req.session.save((err) => {
+        req.session.save(err => {
             if (err) console.error("Session save error:", err);
             else console.log("Session saved successfully!");
         });
-
-        console.log(`req.session--${JSON.stringify(req.session)}`);
 
         res.status(200).send(result);
     } catch (error) {
