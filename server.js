@@ -82,6 +82,8 @@ app.post('/chat/init', async (req, res) => {
             else console.log("Session saved successfully!");
         });
 
+        console.log(`req.session--${req.session}`);
+
         res.status(200).send(result);
     } catch (error) {
         console.error("Error creating session:", error);
