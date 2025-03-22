@@ -20,7 +20,7 @@ app.use(session({
     , resave: false
     , saveUninitialized: true
     , cookie: { 
-        secure: true,
+        secure: false,
         httpOnly: true,
         sameSite: 'None'
     }
@@ -96,7 +96,7 @@ app.post('/chat/init', async (req, res) => {
 });
 
 app.post('/chat/cont', async (req, res) => {
-    console.log(`req.session--${req.session}`);
+    console.log(`req.session--${JSON.stringify(req.session)}`);
     if (!req.session.access_token || !req.session.sessionId) {
         console.log(`req.session.access_token--->${req.session.access_token}`);
         console.log(`req.session.sessionId--->${req.session.sessionId}`);
