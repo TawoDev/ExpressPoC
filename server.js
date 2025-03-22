@@ -63,18 +63,24 @@ app.post('/chat/init', async (req, res) => {
 
     try {
         const response = await fetch(apiUrl, {
-            method: "POST",
-            headers: {
+            method: "POST"
+            , headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token.access_token}`
-            },
-            body: JSON.stringify(requestData)
+            }
+            , body: JSON.stringify(requestData)
+            , credentials: 'include' 
         });
 
         let result = await response.json();
         
         req.session.access_token = token.access_token;
         req.session.sessionId = result.sessionId;
+
+        req.session.save((err) => {
+            if (err) console.error("Session save error:", err);
+            else console.log("Session saved successfully!");
+        });
 
         res.status(200).send(result);
     } catch (error) {
