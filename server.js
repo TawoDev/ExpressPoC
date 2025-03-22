@@ -13,10 +13,10 @@ const clientSecret = process.env.CLIENT_SECRET;
 const sessionSecret = process.env.SESSION_SECRET;
 
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'your_secret_key'
+    secret: process.env.SESSION_SECRET
     , resave: false
     , saveUninitialized: true
-    , cookie: { secure: false }
+    , cookie: { secure: true }
 }));
 
 const accessToken = async (clientId, clientSecret) => {
