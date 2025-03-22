@@ -13,13 +13,13 @@ const clientSecret = process.env.CLIENT_SECRET;
 const sessionSecret = process.env.SESSION_SECRET;
 
 app.use(cors());
-app.use(express.json());
 app.use(session({
     secret: sessionSecret
     , resave: false
     , saveUninitialized: true
     , cookie: { secure: true }
 }));
+app.use(express.json());
 
 const accessToken = async (clientId, clientSecret) => {
     const data = new URLSearchParams();
