@@ -82,7 +82,7 @@ app.post('/chat/init', async (req, res) => {
             else console.log("Session saved successfully!");
         });
 
-        console.log(`req.session--${req.session}`);
+        console.log(`req.session--${JSON.stringify(req.session)}`);
 
         res.status(200).send(result);
     } catch (error) {
