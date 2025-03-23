@@ -1,7 +1,9 @@
-const express = require('express');
-const cors = require('cors');
+import express from 'express';
+import cors from 'cors';
+import * as dotenv from 'dotenv';
+
 const app = express();
-const dotenv = require('dotenv');
+
 dotenv.config();
 
 const apiUrl = process.env.API_URL;
